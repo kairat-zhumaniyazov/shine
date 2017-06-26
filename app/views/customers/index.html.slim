@@ -4,13 +4,10 @@ article[ng-app="customers" ng-controller="CustomerSearchController"]
 
   section.search-form
     form
-      div.input-group.input-group-lg
-        lable.sr-only[for='keywords']
-          | Keywords
-        input.form-control.input-lg[type='text' name='keywords' placeholder='First Name, Last Name of Email Address' ng-model='keywords']
-        span.input-group-btn
-          button.btn.btn-primary.btn-lg[ng-click='search(keywords)']
-            | Find Customers
+      lable.sr-only[for='search.keywords']
+        | Keywords
+      input.form-control.input-lg[type='text' name='keywords' placeholder='First Name, Last Name of Email Address' ng-change='search(keywords)' ng-model='keywords']
+
 
     h1.searchedFor[ng-if="searchedFor"]
       small
