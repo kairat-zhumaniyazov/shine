@@ -23,16 +23,16 @@ article[ng-app="customers" ng-controller="CustomerSearchController"]
     = render 'pager', keywords: @keywords, page: @page
 
     ol.list-group
-      - @customers.each do |customer|
-        li.list-group-item.clearfix
-          h3.pull-right
-            small.text-uppercase Joined
-            '
-            = l customer.created_at.to_date
-          h2.h3
-            = "#{customer.first_name} #{customer.last_name}"
-            '
-            small= customer.username
-          h4= customer.email
+      li.list-group-item.clearfix[ng-repeat="customer in customers"]
+        h3.pull-right
+          small.text-uppercase Joined
+          | {{ customer.created_at | date}}
+        h2.h3
+          | {{ customer.first_name }} {{ customer.last_name }}
+          '
+          small
+            | {{ customer.username }}
+        h4
+          | {{ customer.email }}
 
     = render 'pager', keywords: @keywords, page: @page
