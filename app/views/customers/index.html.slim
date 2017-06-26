@@ -1,32 +1,38 @@
-header
-  h1.h2 Customer Search
-
-section.search-form
-  = form_for :customers, method: :get do |f|
-    div.input-group.input-group-lg
-      = label_tag :keywords, nil, class: 'sr-only'
-      = text_field_tag :keywords, nil, placeholder: 'First Name, Last Name of Email Address',
-        class: 'form-control input-lg'
-      span.input-group-btn
-        = submit_tag 'Find Customers', class: 'btn btn-primary btn-lg'
-
-.section.search-results
+article[ng-app="customers" ng-controller="CustomerSearchController"]
   header
-    h1.h3 Results
+    h1.h2 Customer Search
 
-  = render 'pager', keywords: @keywords, page: @page
+  section.search-form
+    form
+      div.input-group.input-group-lg
+        lable.sr-only[for='keywords']
+          | Keywords
+        input.form-control.input-lg[type='text' name='keywords' placeholder='First Name, Last Name of Email Address' ng-model='keywords']
+        span.input-group-btn
+          button.btn.btn-primary.btn-lg[ng-click='search(keywords)']
+            | Find Customers
 
-  ol.list-group
-    - @customers.each do |customer|
-      li.list-group-item.clearfix
-        h3.pull-right
-          small.text-uppercase Joined
-          '
-          = l customer.created_at.to_date
-        h2.h3
-          = "#{customer.first_name} #{customer.last_name}"
-          '
-          small= customer.username
-        h4= customer.email
+    h1.searchedFor[ng-if="searchedFor"]
+      small
+        | Searched for: {{searchedFor}}
 
-  = render 'pager', keywords: @keywords, page: @page
+  .section.search-results
+    header
+      h1.h3 Results
+
+    = render 'pager', keywords: @keywords, page: @page
+
+    ol.list-group
+      - @customers.each do |customer|
+        li.list-group-item.clearfix
+          h3.pull-right
+            small.text-uppercase Joined
+            '
+            = l customer.created_at.to_date
+          h2.h3
+            = "#{customer.first_name} #{customer.last_name}"
+            '
+            small= customer.username
+          h4= customer.email
+
+    = render 'pager', keywords: @keywords, page: @page
