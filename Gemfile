@@ -28,6 +28,8 @@ group :development, :test do
   gem 'byebug', platform: :mri
   gem 'faker'
   gem 'rspec-rails'
+  gem 'poltergeist'
+  gem 'database_cleaner'
 end
 
 group :development do
