@@ -13,6 +13,9 @@ section.search-form
 .section.search-results
   header
     h1.h3 Results
+
+  = render 'pager', keywords: @keywords, page: @page
+
   ol.list-group
     - @customers.each do |customer|
       li.list-group-item.clearfix
@@ -25,3 +28,5 @@ section.search-form
           '
           small= customer.username
         h4= customer.email
+
+  = render 'pager', keywords: @keywords, page: @page
