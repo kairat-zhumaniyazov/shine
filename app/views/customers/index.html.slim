@@ -13,7 +13,7 @@ article[ng-app="customers" ng-controller="CustomerSearchController"]
       small
         | Searched for: {{searchedFor}}
 
-  .section.search-results
+  section.search-results[ng-if='customers.length > 0']
     header
       h1.h3 Results
 
@@ -23,6 +23,7 @@ article[ng-app="customers" ng-controller="CustomerSearchController"]
       li.list-group-item.clearfix[ng-repeat="customer in customers"]
         h3.pull-right
           small.text-uppercase Joined
+          '
           | {{ customer.created_at | date}}
         h2.h3
           | {{ customer.first_name }} {{ customer.last_name }}
