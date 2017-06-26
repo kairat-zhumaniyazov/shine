@@ -1,5 +1,6 @@
 header
-  h1 Welvome ti Shine!
+  h1
+    = "Welvome ti Shine, #{current_user.email}"
   
   h2
     = "We're using Rails #{Rails.version}"
