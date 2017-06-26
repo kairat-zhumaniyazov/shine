@@ -15,6 +15,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'slim'
 
 gem 'devise'
+gem 'bower-rails'
 
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
