@@ -1,6 +1,7 @@
 var app = angular.module('customers',
   [
     'ngRoute',
+    'ngResource',
     'templates'
   ]
 );
