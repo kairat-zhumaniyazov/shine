@@ -11,12 +11,12 @@ form
               .form-group
                 label.sr-only[for="first-name"]
                   |  First Name
-                input.form-control[type="text" name="first-name" value="Bob"]
+                input.form-control[type="text" name="first-name" ng-model='customer.first_name']
             .col-md-4
               .form-group
                 label.sr-only[for="last-name"]
                   | Last Name
-                input.form-control[type="text" name="last-name" value="Jones"]
+                input.form-control[type="text" name="last-name" ng-model='customer.last_name']
             .col-md-4
               .form-group
                 label.sr-only[for="username"]
@@ -24,15 +24,15 @@ form
                 .input-group
                   .input-group-addon
                     | @
-                  input.form-control[type="text" name="username" value="bobert123"]
+                  input.form-control[type="text" name="username" ng-model='customer.username']
           .form-group
             label.sr-only[for="email"]
               | Email
-            input.form-control[type="text" name="email" value="bobbyj@somewhere.net"]
+            input.form-control[type="text" name="email" ng-model='customer.email']
         footer.panel-footer
           label[for="joined"]
             | Joined
-          |  12/13/2014
+          |  {{ customer.joined_at | date }}
       article.panel.panel-default
         header.panel-heading
           h2.h4
@@ -64,19 +64,19 @@ form
           h2.h4
             |  Billing Info
         section.panel-body
-          article
+          article[ng-controller='CustomerCreditCardController']
             .row
               .col-md-7
                 p.h4
-                  |  ****-****-****-1234
+                  |  ****-****-****-{{ creditCard.lastFour }}
                   span.label.label-success
-                    | VISA
+                    | {{ creditCard.cardType }}
                 p.h5
                   label
                     | Expires:
-                  |  04/19
+                  |  {{ creditCard.expirationMonth }}/{{ creditCard.expirationYear }}
               .col-md-5.text-right
-                button.btn.btn-lg.btn-default
+                a.btn.btn-lg.btn-default[href='{{creditCard.derailsLink}}']
                   |  View Details…
           hr
           article.well.well-sm
