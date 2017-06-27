@@ -1,0 +1,51 @@
+header
+  h1.h2 Customer Search
+
+section.search-form
+  form
+    lable.sr-only[for='search.keywords']
+      | Keywords
+    input.form-control.input-lg[type='text' name='keywords' placeholder='First Name, Last Name of Email Address' ng-change='search(keywords)' ng-model='keywords']
+
+
+  h1.searchedFor[ng-if="searchedFor"]
+    small
+      | Searched for: {{searchedFor}}
+
+section.search-results[ng-if='customers.length > 0']
+  header
+    h1.h3 Results
+
+  nav
+    ul.pager
+      li.previous
+        a[href='' ng-click='previousPage()']
+          | &larr; Previous
+
+      li.next
+        a[href='' ng-click='nextPage()']
+          | Next &rarr;
+
+  ol.list-group
+    li.list-group-item.clearfix[ng-repeat="customer in customers"]
+      h3.pull-right
+        small.text-uppercase Joined
+        '
+        | {{ customer.created_at | date}}
+      h2.h3
+        | {{ customer.first_name }} {{ customer.last_name }}
+        '
+        small
+          | {{ customer.username }}
+      h4
+        | {{ customer.email }}
+
+  nav
+    ul.pager
+      li.previous
+        a[href='' ng-click='previousPage()']
+          | &larr; Previous
+
+      li.next
+        a[href='' ng-click='nextPage()']
+          | Next &rarr;
