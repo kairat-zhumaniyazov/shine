@@ -66,18 +66,25 @@ form
         section.panel-body
           article[ng-controller='CustomerCreditCardController']
             .row
-              .col-md-7
-                p.h4
-                  |  ****-****-****-{{ creditCard.lastFour }}
-                  span.label.label-success
-                    | {{ creditCard.cardType }}
-                p.h5
-                  label
-                    | Expires:
-                  |  {{ creditCard.expirationMonth }}/{{ creditCard.expirationYear }}
-              .col-md-5.text-right
-                a.btn.btn-lg.btn-default[href='{{creditCard.derailsLink}}']
-                  |  View Details…
+              div[ng-if='!creditCard.$resolved']
+                .col-md-10.col-md-offset-1
+                  aside.progress
+                    .progress-bar.progress-bar-striped.active[style='width: 100%']
+                      | Loading...
+              
+              div[ng-if='creditCard.$resolved']
+                .col-md-7
+                  p.h4
+                    |  ****-****-****-{{ creditCard.lastFour }}
+                    span.label.label-success
+                      | {{ creditCard.cardType }}
+                  p.h5
+                    label
+                      | Expires:
+                    |  {{ creditCard.expirationMonth }}/{{ creditCard.expirationYear }}
+                .col-md-5.text-right
+                  a.btn.btn-lg.btn-default[href='{{creditCard.derailsLink}}']
+                    |  View Details…
           hr
           article.well.well-sm
             header
