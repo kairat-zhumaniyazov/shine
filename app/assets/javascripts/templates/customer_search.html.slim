@@ -37,6 +37,9 @@ section.search-results[ng-if='customers.length > 0']
         '
         small
           | {{ customer.username }}
+      .pull-right
+        button.btn.btn-small.btn-primary[ng-click='viewDetails(customer)']
+          | View Details...
       h4
         | {{ customer.email }}
 

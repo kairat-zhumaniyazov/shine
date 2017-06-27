@@ -1,0 +1,12 @@
+article.customer-details
+  h1
+    | Customer {{ customer.id }}
+  h2
+    | {{ customer.first_name }} {{ customer.last_name }}
+  h3
+    | {{ customer.email }}
+  h4
+    | {{ customer.username }}
+  h5
+    small.text-uppercase Joined
+    | {{ customer.created_at | date }}
