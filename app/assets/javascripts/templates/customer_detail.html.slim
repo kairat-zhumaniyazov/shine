@@ -64,7 +64,7 @@ form
           h2.h4
             |  Billing Info
         section.panel-body
-          article[ng-controller='CustomerCreditCardController']
+          article[ng-controller='CustomerCreditCardController' ng-init='setCardholderId(customerId)']
             .row
               div[ng-if='!creditCard.$resolved']
                 .col-md-10.col-md-offset-1
