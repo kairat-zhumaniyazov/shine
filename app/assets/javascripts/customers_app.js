@@ -11,15 +11,16 @@ app.controller('CustomerSearchController', [
         return;
       }
 
-      $http.get('/customers.json', {
-        'params': {
-          'keywords': searchTerm,
-          'page': page
-        }
-      }).then(function(response) {
-        $scope.customers = response.data;
-      }, function(response) {
-        alert('There was a ploblem: ' + response.status);
+      $http.get('/customers.json',
+                { 'params': { 'keywords': searchTerm, 'page': page } }
+      ).success(
+        function(data, status, headers, config) {
+          $scope.customers = data;
+          $scope.loading = false;
+      }).error(
+        function(data, status, headers, config) {
+            $scope.loading = false;
+            alert('There was a problem: ' + status);
       });
     }
 
