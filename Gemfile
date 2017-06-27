@@ -17,6 +17,9 @@ gem 'slim'
 gem 'devise'
 gem 'bower-rails'
 
+gem 'angular-rails-templates'
+gem 'sprockets'
+
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.5'
 
