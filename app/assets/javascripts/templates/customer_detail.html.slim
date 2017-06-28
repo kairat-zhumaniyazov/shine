@@ -1,4 +1,4 @@
-form[novalidate]
+form[novalidate name='form']
   .row
     .col-md-6
       article.panel.panel-primary
@@ -7,16 +7,23 @@ form[novalidate]
             |  Customer
         section.panel-body
           .row
+
             .col-md-4
               .form-group
                 label.sr-only[for="first-name"]
                   |  First Name
-                input.form-control[type="text" name="first-name" ng-model='customer.first_name' required]
+                input.form-control[type="text" name="first_name" ng-model='customer.first_name' required]
+                p.help-block[ng-messages='form.first_name.$error']
+                  span[ng-message='required'] First name is required
+
             .col-md-4
               .form-group
                 label.sr-only[for="last-name"]
                   | Last Name
-                input.form-control[type="text" name="last-name" ng-model='customer.last_name' required]
+                input.form-control[type="text" name="last_name" ng-model='customer.last_name' required]
+                p.help-block[ng-messages='form.last_name.$error']
+                  span[ng-message='required'] Last name is required
+
             .col-md-4
               .form-group
                 label.sr-only[for="username"]
@@ -25,10 +32,17 @@ form[novalidate]
                   .input-group-addon
                     | @
                   input.form-control[type="text" name="username" ng-model='customer.username' required]
+                  p.help-block[ng-messages='form.username.$error']
+                    span[ng-message='required'] Username is required
+
           .form-group
             label.sr-only[for="email"]
               | Email
             input.form-control[type="email" name="email" ng-model='customer.email' required]
+            p.help-block[ng-messages='form.email.$error']
+              span[ng-message='required'] Email is required
+              span[ng-message='email'] Email must look like an email
+
         footer.panel-footer
           label[for="joined"]
             | Joined
@@ -41,24 +55,36 @@ form[novalidate]
           .form-group
             label.sr-only[for="street-address"]
               |  Street Address
-            input.form-control[type="text" name="street-address" ng-model='customer.shipping_street' required]
+            input.form-control[type="text" name="shipping_street" ng-model='customer.shipping_street' required]
+            p.help-block[ng-messages='form.shipping_street.$error']
+              span[ng-message='required'] Shipping street is required
 
           .row
             .col-md-6
               .form-group
                 label.sr-only[for="city"]
                   | City
-                input.form-control[type="text" name="city" ng-model='customer.shipping_city' required]
+                input.form-control[type="text" name="shipping_city" ng-model='customer.shipping_city' required]
+                p.help-block[ng-messages='form.shipping_city.$error']
+                  span[ng-message='required'] Shipping city is required
+
             .col-md-2
               .form-group
                 label.sr-only[for="state"]
                   | State
-                input.form-control[type="text" name="state" ng-model='customer.shipping_state' required pattern='[A-Z][A-Z]']
+                input.form-control[type="text" name="shipping_state" ng-model='customer.shipping_state' required pattern='[A-Z][A-Z]']
+                p.help-block[ng-messages='form.shipping_state.$error']
+                  span[ng-message='required'] Shipping state is required
+                  span[ng-message='pattern'] Shipping state must be 2 letters
+
             .col-md-4
               .form-group
                 label.sr-only[for="zip"]
                   | Zip
-                input.form-control[type="text" name="zip" ng-model='customer.shipping_zipcode' required pattern='\d\d\d\d\d']
+                input.form-control[type="text" name="shipping_zipcode" ng-model='customer.shipping_zipcode' required pattern='\d\d\d\d\d']
+                p.help-block[ng-messages='form.shipping_zipcode.$error']
+                  span[ng-message='required'] Zip is required
+                  span[ng-message='pattern'] Zip must be five digits
 
     .col-md-6.billing_info
       article.panel.panel-default
@@ -98,23 +124,36 @@ form[novalidate]
             .form-group
               label.sr-only[for="street-address"]
                 |  Street Address
-              input.form-control[type="text" name="street-address" ng-model='customer.billing_street' required]
+              input.form-control[type="text" name="billing_street" ng-model='customer.billing_street' required]
+              p.help-block[ng-messages='form.billing_street.$error']
+                span[ng-message='required'] Street is required
+
             .row
               .col-md-6
                 .form-group
                   label.sr-only[for="city"]
                     | City
-                  input.form-control[type="text" name="city" ng-model='customer.billing_city' required]
+                  input.form-control[type="text" name="billing_city" ng-model='customer.billing_city' required]
+                  p.help-block[ng-messages='form.billing_city.$error']
+                    span[ng-message='required'] City is required
+
               .col-md-2
                 .form-group
                   label.sr-only[for="state"]
                     | State
-                  input.form-control[type="text" name="state" ng-model='customer.billing_state' required pattern='[A-Z][A-Z]']
+                  input.form-control[type="text" name="billing_state" ng-model='customer.billing_state' required pattern='[A-Z][A-Z]']
+                  p.help-block[ng-messages='form.billing_state.$error']
+                    span[ng-message='required'] State is required
+                    span[ng-message='pattern'] State must be 2 letters
+
               .col-md-4
                 .form-group
                   label.sr-only[for="zip"]
                     | Zip
-                  input.form-control[type="text" name="zip" ng-model='customer.billing_zipcode' required pattern='\d\d\d\d\d']
+                  input.form-control[type="text" name="billing_zipcode" ng-model='customer.billing_zipcode' required pattern='\d\d\d\d\d']
+                  p.help-block[ng-messages='form.billing_zipcode.$error']
+                    span[ng-message='required'] Zip is required
+                    span[ng-message='pattern'] Zip must be five digits
                   
       .text-right
         button.btn.btn-lg.btn-primary[ng-click='save()']

@@ -2,6 +2,7 @@ var app = angular.module('customers',
   [
     'ngRoute',
     'ngResource',
+    'ngMessages',
     'templates'
   ]
 );
@@ -68,6 +69,16 @@ app.controller('CustomerDetailController', [
     var Customer = $resource('/customers/:customerId.json')
 
     $scope.customer = Customer.get({ 'customerId': $scope.customerId });
+
+    $scope.save = function () {
+      // if ($scope.form.email.$valid) {
+      //   alert('Email is valid');
+      // } else if ($scope.form.email.$error.required) {
+      //   alert('Email is required');
+      // } else if ($scope.form.email.$error.email) {
+      //   alert('Email. must look like and email');
+      // }
+    }
   }
 ]);
 
