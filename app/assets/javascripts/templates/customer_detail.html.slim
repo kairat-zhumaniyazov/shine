@@ -1,4 +1,4 @@
-form
+form[novalidate]
   .row
     .col-md-6
       article.panel.panel-primary
@@ -11,12 +11,12 @@ form
               .form-group
                 label.sr-only[for="first-name"]
                   |  First Name
-                input.form-control[type="text" name="first-name" ng-model='customer.first_name']
+                input.form-control[type="text" name="first-name" ng-model='customer.first_name' required]
             .col-md-4
               .form-group
                 label.sr-only[for="last-name"]
                   | Last Name
-                input.form-control[type="text" name="last-name" ng-model='customer.last_name']
+                input.form-control[type="text" name="last-name" ng-model='customer.last_name' required]
             .col-md-4
               .form-group
                 label.sr-only[for="username"]
@@ -24,11 +24,11 @@ form
                 .input-group
                   .input-group-addon
                     | @
-                  input.form-control[type="text" name="username" ng-model='customer.username']
+                  input.form-control[type="text" name="username" ng-model='customer.username' required]
           .form-group
             label.sr-only[for="email"]
               | Email
-            input.form-control[type="text" name="email" ng-model='customer.email']
+            input.form-control[type="email" name="email" ng-model='customer.email' required]
         footer.panel-footer
           label[for="joined"]
             | Joined
@@ -41,24 +41,26 @@ form
           .form-group
             label.sr-only[for="street-address"]
               |  Street Address
-            input.form-control[type="text" name="street-address" value="123 Any St"]
+            input.form-control[type="text" name="street-address" ng-model='customer.shipping_street' required]
+
           .row
             .col-md-6
               .form-group
                 label.sr-only[for="city"]
                   | City
-                input.form-control[type="text" name="city" value="Washington"]
+                input.form-control[type="text" name="city" ng-model='customer.shipping_city' required]
             .col-md-2
               .form-group
                 label.sr-only[for="state"]
                   | State
-                input.form-control[type="text" name="state" value="DC"]
+                input.form-control[type="text" name="state" ng-model='customer.shipping_state' required pattern='[A-Z][A-Z]']
             .col-md-4
               .form-group
                 label.sr-only[for="zip"]
                   | Zip
-                input.form-control[type="text" name="zip" value="20001"]
-    .col-md-6
+                input.form-control[type="text" name="zip" ng-model='customer.shipping_zipcode' required pattern='\d\d\d\d\d']
+
+    .col-md-6.billing_info
       article.panel.panel-default
         header.panel-heading
           h2.h4
@@ -96,20 +98,24 @@ form
             .form-group
               label.sr-only[for="street-address"]
                 |  Street Address
-              input.form-control[type="text" name="street-address" value="123 Any St"]
+              input.form-control[type="text" name="street-address" ng-model='customer.billing_street' required]
             .row
               .col-md-6
                 .form-group
                   label.sr-only[for="city"]
                     | City
-                  input.form-control[type="text" name="city" value="Washington"]
+                  input.form-control[type="text" name="city" ng-model='customer.billing_city' required]
               .col-md-2
                 .form-group
                   label.sr-only[for="state"]
                     | State
-                  input.form-control[type="text" name="state" value="DC"]
+                  input.form-control[type="text" name="state" ng-model='customer.billing_state' required pattern='[A-Z][A-Z]']
               .col-md-4
                 .form-group
                   label.sr-only[for="zip"]
                     | Zip
-                  input.form-control[type="text" name="zip" value="20001"]
+                  input.form-control[type="text" name="zip" ng-model='customer.billing_zipcode' required pattern='\d\d\d\d\d']
+                  
+      .text-right
+        button.btn.btn-lg.btn-primary[ng-click='save()']
+          | Save Changes

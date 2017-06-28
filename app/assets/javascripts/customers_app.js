@@ -68,7 +68,6 @@ app.controller('CustomerDetailController', [
     var Customer = $resource('/customers/:customerId.json')
 
     $scope.customer = Customer.get({ 'customerId': $scope.customerId });
-    alert('ajax call initiated!');
   }
 ]);
 
