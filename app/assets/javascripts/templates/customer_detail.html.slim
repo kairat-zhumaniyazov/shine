@@ -35,7 +35,9 @@ form[novalidate name='form']
                   p.help-block[ng-messages='form.username.$error']
                     span[ng-message='required'] Username is required
 
-          .form-group
+          .form-group.has-feedback{ 
+            ng-class="{'has-error': form.email.$invalid && form.email.$dirty,
+                       'has-success': form.email.$valid && form.email.$touched}" }
             label.sr-only[for="email"]
               | Email
             input.form-control[type="email" name="email" ng-model='customer.email' required]
