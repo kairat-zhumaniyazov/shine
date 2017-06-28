@@ -158,5 +158,5 @@ form[novalidate name='form']
                     span[ng-message='pattern'] Zip must be five digits
                   
       .text-right
-        button.btn.btn-lg.btn-primary[ng-click='save()']
+        button.btn.btn-lg.btn-primary[ng-click='save()' ng-disabled="form.$invalid || form.$pristine"]
           | Save Changes
