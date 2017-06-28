@@ -1,7 +1,15 @@
-class CreateCustomerDetailsMaterializedView < ActiveRecord::Migration[5.0]
+#---
+# Excerpted from "Rails, Angular, Postgres, and Bootstrap",
+# published by The Pragmatic Bookshelf.
+# Copyrights apply to this code. It may not be used to create training material,
+# courses, books, articles, and the like. Contact us if you are in doubt.
+# We make no guarantees that this code is fit for any purpose.
+# Visit http://www.pragmaticprogrammer.com/titles/dcbang for more book information.
+#---
+class CreateCustomerDetailsMaterializedView < ActiveRecord::Migration
   def up
     execute %{
-    CREATE VIEW customer_details AS
+    CREATE MATERIALIZED VIEW customer_details AS
       SELECT
         customers.id             AS customer_id,
         customers.first_name     AS first_name,
@@ -35,8 +43,13 @@ class CreateCustomerDetailsMaterializedView < ActiveRecord::Migration[5.0]
       JOIN states shipping_state        ON
         shipping_address.state_id = shipping_state.id
     }
+    execute %{
+      CREATE UNIQUE INDEX 
+        customer_details_customer_id 
+      ON
+        customer_details(customer_id)
+    }
   end
-
   def down
     execute "DROP VIEW customer_details"
   end
