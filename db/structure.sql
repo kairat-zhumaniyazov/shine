@@ -40,9 +40,6 @@ CREATE FUNCTION refresh_customer_details() RETURNS trigger
       BEGIN
         REFRESH MATERIALIZED VIEW CONCURRENTLY customer_details;
         RETURN NULL;
-      EXCEPTION
-        WHEN feature_not_supported THEN
-          RETURN NULL;
       END $$;
 
 
@@ -100,10 +97,10 @@ CREATE TABLE ar_internal_metadata (
 
 CREATE TABLE customers (
     id integer NOT NULL,
-    first_name character varying,
-    last_name character varying,
-    email character varying,
-    username character varying,
+    first_name character varying NOT NULL,
+    last_name character varying NOT NULL,
+    email character varying NOT NULL,
+    username character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -144,10 +141,10 @@ CREATE TABLE states (
 
 
 --
--- Name: customer_details; Type: VIEW; Schema: public; Owner: -
+-- Name: customer_details; Type: MATERIALIZED VIEW; Schema: public; Owner: -
 --
 
-CREATE VIEW customer_details AS
+CREATE MATERIALIZED VIEW customer_details AS
  SELECT customers.id AS customer_id,
     customers.first_name,
     customers.last_name,
@@ -170,7 +167,8 @@ CREATE VIEW customer_details AS
      JOIN states billing_state ON ((billing_address.state_id = billing_state.id)))
      JOIN customers_shipping_addresses ON (((customers.id = customers_shipping_addresses.customer_id) AND (customers_shipping_addresses."primary" = true))))
      JOIN addresses shipping_address ON ((shipping_address.id = customers_shipping_addresses.address_id)))
-     JOIN states shipping_state ON ((shipping_address.state_id = shipping_state.id)));
+     JOIN states shipping_state ON ((shipping_address.state_id = shipping_state.id)))
+  WITH NO DATA;
 
 
 --
@@ -274,9 +272,9 @@ CREATE TABLE users (
     last_sign_in_at timestamp without time zone,
     current_sign_in_ip inet,
     last_sign_in_ip inet,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    CONSTRAINT email_must_be_compaby_email CHECK (((email)::text ~* '^[^@]+@example\.com'::text))
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    CONSTRAINT email_must_be_company_email CHECK (((email)::text ~* '[A-Za-z0-9._%-]+@example.com'::text))
 );
 
 
@@ -406,6 +404,13 @@ ALTER TABLE ONLY users
 
 
 --
+-- Name: customer_details_customer_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX customer_details_customer_id ON customer_details USING btree (customer_id);
+
+
+--
 -- Name: customers_lower_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -427,27 +432,6 @@ CREATE INDEX customers_lower_last_name ON customers USING btree (lower((last_nam
 
 
 --
--- Name: index_addresses_on_state_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_addresses_on_state_id ON addresses USING btree (state_id);
-
-
---
--- Name: index_customers_billing_addresses_on_address_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_customers_billing_addresses_on_address_id ON customers_billing_addresses USING btree (address_id);
-
-
---
--- Name: index_customers_billing_addresses_on_customer_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_customers_billing_addresses_on_customer_id ON customers_billing_addresses USING btree (customer_id);
-
-
---
 -- Name: index_customers_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -459,20 +443,6 @@ CREATE UNIQUE INDEX index_customers_on_email ON customers USING btree (email);
 --
 
 CREATE UNIQUE INDEX index_customers_on_username ON customers USING btree (username);
-
-
---
--- Name: index_customers_shipping_addresses_on_address_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_customers_shipping_addresses_on_address_id ON customers_shipping_addresses USING btree (address_id);
-
-
---
--- Name: index_customers_shipping_addresses_on_customer_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_customers_shipping_addresses_on_customer_id ON customers_shipping_addresses USING btree (customer_id);
 
 
 --
@@ -524,12 +494,12 @@ CREATE TRIGGER refresh_customer_details AFTER INSERT OR DELETE OR UPDATE ON addr
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-('20170626094624'),
-('20170626111028'),
-('20170626114455'),
-('20170626141821'),
-('20170627133410'),
-('20170627174105'),
-('20170627190217');
+('20150228234349'),
+('20150303133619'),
+('20150304140122'),
+('20150308225243'),
+('20150616120711'),
+('20150625130204'),
+('20150626120132');
 
 
